@@ -2,8 +2,8 @@
 
 In this lab you will build a small but complete pipeline for a Java project:
 
-* **Continuous Integration (CI):** every push and every pull request is built and unit tested automatically.
-* **Continuous Delivery (CD):** when you tag a version, GitHub builds the jar and publishes it as a downloadable release.
+- **Continuous Integration (CI):** every push and every pull request is built and unit tested automatically.
+- **Continuous Delivery (CD):** when you tag a version, GitHub builds the jar and publishes it as a downloadable release.
 
 You will also break the build on purpose, so you know what a failing pipeline looks like and how to read it.
 
@@ -31,10 +31,10 @@ You will also break the build on purpose, so you know what a failing pipeline lo
 
 ### You need
 
-* A GitHub account
-* Git installed (`git --version`)
-* JDK 25 or newer (`java -version`)
-* An editor or IDE (IntelliJ IDEA, VS Code, Eclipse...)
+- A GitHub account
+- Git installed (`git --version`)
+- JDK 25 or newer (`java -version`)
+- An editor or IDE (IntelliJ IDEA, VS Code, Eclipse...)
 
 You do **not** need Maven installed. The project includes the Maven Wrapper (`mvnw` / `mvnw.cmd`), which downloads the right Maven version the first time you run it.
 
@@ -45,7 +45,7 @@ Every student works in their **own** repository, because GitHub Actions runs per
 1. Open the course repository on GitHub.
 2. Click **Use this template → Create a new repository**.
 3. Owner: you. Name: for example `ci-cd-lab`. Visibility: **Public**.
-   *Public repositories get free GitHub Actions minutes on standard runners, so this lab costs you nothing.*
+   _Public repositories get free GitHub Actions minutes on standard runners, so this lab costs you nothing._
 4. Clone your new repository:
 
    ```bash
@@ -61,13 +61,13 @@ A pipeline only automates what you can already do by hand. Run the build on your
 
 ```bash
 ./mvnw verify          # macOS / Linux / Git Bash
-mvnw.cmd verify        # Windows cmd / PowerShell
+mvnw.cmd verify        # Windows cmd / PowerShell  # Also for Powershell?
 ```
 
 You should see something like:
 
 ```
-[INFO] Tests run: 9, Failures: 0, Errors: 0, Skipped: 1
+[INFO] Tests run: 9, Failures: 0, Errors: 0, Skipped: 1   # WARNING
 [INFO] BUILD SUCCESS
 ```
 
@@ -98,15 +98,15 @@ java -jar target/ci-cd-demo-1.0.0-SNAPSHOT.jar
 
 ## 1. Key concepts
 
-| Term | Meaning |
-|---|---|
-| **Workflow** | An automated process, defined in a YAML file in `.github/workflows/`. A repository can have many. |
-| **Event** (trigger) | What starts a workflow: `push`, `pull_request`, a tag, a schedule, a manual click... Set with `on:`. |
-| **Job** | A group of steps that runs on one fresh virtual machine. Jobs run in parallel unless you say otherwise. |
-| **Runner** | The machine that runs a job. `ubuntu-latest` is a Linux VM hosted by GitHub, wiped after every job. |
-| **Step** | One task in a job: either a shell command (`run:`) or a reusable **action** (`uses:`). |
-| **Action** | A reusable building block, e.g. `actions/checkout` (gets your code) or `actions/setup-java` (installs a JDK). |
-| **Artifact** | A file produced by a run that you want to keep, e.g. a jar or test reports. |
+| Term                | Meaning                                                                                                       |
+| ------------------- | ------------------------------------------------------------------------------------------------------------- |
+| **Workflow**        | An automated process, defined in a YAML file in `.github/workflows/`. A repository can have many.             |
+| **Event** (trigger) | What starts a workflow: `push`, `pull_request`, a tag, a schedule, a manual click... Set with `on:`.          |
+| **Job**             | A group of steps that runs on one fresh virtual machine. Jobs run in parallel unless you say otherwise.       |
+| **Runner**          | The machine that runs a job. `ubuntu-latest` is a Linux VM hosted by GitHub, wiped after every job.           |
+| **Step**            | One task in a job: either a shell command (`run:`) or a reusable **action** (`uses:`).                        |
+| **Action**          | A reusable building block, e.g. `actions/checkout` (gets your code) or `actions/setup-java` (installs a JDK). |
+| **Artifact**        | A file produced by a run that you want to keep, e.g. a jar or test reports.                                   |
 
 The pipeline you are about to build:
 
@@ -143,7 +143,7 @@ The pipeline you are about to build:
            uses: actions/setup-java@v5
            with:
              distribution: temurin
-             java-version: '25'
+             java-version: "25"
              cache: maven
 
          - name: Build and run tests
@@ -163,10 +163,10 @@ The pipeline you are about to build:
 
 **Questions**
 
-* 1.1 What does each of the three steps do? What would happen if you removed `actions/checkout`?
-* 1.2 The VM is brand new for every run. What does `cache: maven` save, and where in the log can you see it?
-* 1.3 Why do we use `-B` (batch mode) in CI?
-* 1.4 What is `timeout-minutes` protecting you against?
+- 1.1 What does each of the three steps do? What would happen if you removed `actions/checkout`?
+- 1.2 The VM is brand new for every run. What does `cache: maven` save, and where in the log can you see it?
+- 1.3 Why do we use `-B` (batch mode) in CI?
+- 1.4 What is `timeout-minutes` protecting you against?
 
 ---
 
@@ -191,18 +191,19 @@ The pipeline you are about to build:
 
 3. Watch the **Actions** tab. The run turns red ❌.
 4. Open the failed run and find:
-   * which step failed,
-   * which test failed,
-   * the expected and the actual value.
+   - which step failed,
+   - which test failed,
+   - the expected and the actual value.
 
    Tip: the line starting with `[ERROR] Failures:` is a good place to start. You may also get an e-mail from GitHub about the failed run.
+
 5. Fix the bug, push again, and confirm the run is green.
 
 **Questions**
 
-* 2.1 Which test failed, and what message did it give?
-* 2.2 Was the jar produced in the failed run? Why or why not?
-* 2.3 In a team of ten developers, why is it better that this was caught by CI rather than by a colleague who pulled your code?
+- 2.1 Which test failed, and what message did it give?
+- 2.2 Was the jar produced in the failed run? Why or why not?
+- 2.3 In a team of ten developers, why is it better that this was caught by CI rather than by a colleague who pulled your code?
 
 ---
 
@@ -233,6 +234,7 @@ The pipeline you are about to build:
    ```
 
    GitHub shows a **Compare & pull request** button. Click it and create the PR.
+
 3. Look at the bottom of the PR page: the CI check runs on the PR.
 
 You may notice the workflow ran **twice**: once for the `push` to the branch and once for the `pull_request`. That wastes runner time. Change the trigger in `ci.yml` so that pushes only trigger CI on `main`, while pull requests still trigger it from any branch:
@@ -255,7 +257,7 @@ Commit the change on your branch and push. Check that the next push gives only o
 5. Enable **Require status checks to pass**, click **Add checks** and pick `build`.
 6. Save.
 
-*(On older GitHub UIs this is **Settings → Branches → Add branch protection rule**.)*
+_(On older GitHub UIs this is **Settings → Branches → Add branch protection rule**.)_
 
 ### 3c. Try to merge a broken PR
 
@@ -266,8 +268,8 @@ Commit the change on your branch and push. Check that the next push gives only o
 
 **Questions**
 
-* 3.1 Why is a failing check on a PR better than a failing check on `main`?
-* 3.2 Try `git push` directly to `main` now. What happens?
+- 3.1 Why is a failing check on a PR better than a failing check on `main`?
+- 3.2 Try `git push` directly to `main` now. What happens?
 
 ---
 
@@ -313,8 +315,8 @@ java -jar ci-cd-demo-1.0.0-SNAPSHOT.jar
 
 **Questions**
 
-* 4.1 What happens to the `app-jar` upload when the tests fail? Is that what you want?
-* 4.2 Why is it a good idea to build the artifact once in CI rather than on a developer's laptop?
+- 4.1 What happens to the `app-jar` upload when the tests fail? Is that what you want?
+- 4.2 Why is it a good idea to build the artifact once in CI rather than on a developer's laptop?
 
 ---
 
@@ -322,7 +324,7 @@ java -jar ci-cd-demo-1.0.0-SNAPSHOT.jar
 
 **Goal:** Use the pipeline the way a team does every day: a failing test describes the bug, the fix makes it pass, CI confirms it before merge.
 
-The product owner reports: *"'Never odd or even' is a palindrome, but the app says it isn't."*
+The product owner reports: _"'Never odd or even' is a palindrome, but the app says it isn't."_
 
 1. Create a branch `fix-palindrome`.
 2. In `TextUtilsTest.java`, find the test `palindromeIgnoresSpacesAndPunctuation` and **remove the `@Disabled` line** (and the now-unused import if your IDE complains).
@@ -339,8 +341,8 @@ Remove every character that is not a letter or a digit before comparing. `String
 
 **Questions**
 
-* 5.1 Why did we write (enable) the test before the fix?
-* 5.2 Why do teams sometimes use `@Disabled`, and why is it dangerous to leave tests disabled?
+- 5.1 Why did we write (enable) the test before the fix?
+- 5.2 Why do teams sometimes use `@Disabled`, and why is it dangerous to leave tests disabled?
 
 ---
 
@@ -350,7 +352,7 @@ Remove every character that is not a letter or a digit before comparing. `String
 
 ### Background
 
-The `pom.xml` uses a *CI-friendly version*:
+The `pom.xml` uses a _CI-friendly version_:
 
 ```xml
 <version>${revision}</version>
@@ -380,7 +382,7 @@ Create a second workflow, `.github/workflows/release.yml`, that:
 ```yaml
 on:
   push:
-    tags: [ 'v*' ]
+    tags: ["v*"]
 ```
 
 </details>
@@ -425,10 +427,10 @@ Then make a small visible change (for example a new line printed in `App.java`),
 
 **Questions**
 
-* 6.1 What is the difference between *Continuous Delivery* and *Continuous Deployment*? Which one did you just build?
-* 6.2 Why does the release workflow run the tests again, even though CI already ran them on `main`?
-* 6.3 What would happen if you pushed the tag `v1.0.0` a second time? (You can try: `git push origin v1.0.0` after deleting and re-creating it.)
-* 6.4 Why is `permissions: contents: write` only in the release workflow and not in CI?
+- 6.1 What is the difference between _Continuous Delivery_ and _Continuous Deployment_? Which one did you just build?
+- 6.2 Why does the release workflow run the tests again, even though CI already ran them on `main`?
+- 6.3 What would happen if you pushed the tag `v1.0.0` a second time? (You can try: `git push origin v1.0.0` after deleting and re-creating it.)
+- 6.4 Why is `permissions: contents: write` only in the release workflow and not in CI?
 
 ---
 
@@ -440,7 +442,7 @@ Then make a small visible change (for example a new line printed in `App.java`),
 ![CI](https://github.com/<your-username>/<your-repo>/actions/workflows/ci.yml/badge.svg)
 ```
 
-**B2. Build matrix.** Make CI build on both Java 25 and Java 26 using `strategy.matrix`. How many jobs run now? What happens to the required status check name `build`? *(Matrix builds multiply runner time; on private repositories that matters.)*
+**B2. Build matrix.** Make CI build on both Java 25 and Java 26 using `strategy.matrix`. How many jobs run now? What happens to the required status check name `build`? _(Matrix builds multiply runner time; on private repositories that matters.)_
 
 **B3. Don't build for docs.** Changing only `README.md` or `docs/` still runs CI. Use `paths-ignore` so documentation-only changes skip the build. What problem can this cause with a required status check?
 
@@ -454,17 +456,17 @@ Then make a small visible change (for example a new line printed in `App.java`),
 
 ## Troubleshooting
 
-| Symptom | Likely cause / fix |
-|---|---|
-| Nothing appears in the Actions tab | The file is not in exactly `.github/workflows/` and/or does not end in `.yml`/`.yaml`; or Actions is disabled (forks: enable it on the Actions tab; or **Settings → Actions → General**). |
-| "Invalid workflow file" | YAML indentation. Use spaces, never tabs. Every list item under `steps:` starts with `-`. |
-| `./mvnw: Permission denied` (locally on macOS/Linux) | `chmod +x mvnw` (and `git update-index --chmod=+x mvnw` if you commit it). |
-| CI fails with `release version 25 not supported` | `java-version` in `setup-java` is lower than 25. |
-| `WARNING: A terminally deprecated method in sun.misc.Unsafe has been called` at the start of the build | Harmless. It comes from a library inside Maven itself running on Java 25, not from your code. |
-| Release workflow fails with `HTTP 403` / `Resource not accessible by integration` | `permissions: contents: write` is missing, or **Settings → Actions → General → Workflow permissions** is restricted (the `permissions:` key in the workflow normally overrides that). |
-| Pushing a tag did nothing | You created the tag but did not push it: `git push origin v1.0.0`. Or the tag does not match `v*`. |
-| `release.yml` exists but the tag run does not start | The workflow file must exist in the commit the tag points to. Tag a commit that contains `release.yml`. |
-| Workflow ran twice for one push | Both `push` and `pull_request` triggered; see exercise 3a. |
+| Symptom                                                                                                | Likely cause / fix                                                                                                                                                                        |
+| ------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Nothing appears in the Actions tab                                                                     | The file is not in exactly `.github/workflows/` and/or does not end in `.yml`/`.yaml`; or Actions is disabled (forks: enable it on the Actions tab; or **Settings → Actions → General**). |
+| "Invalid workflow file"                                                                                | YAML indentation. Use spaces, never tabs. Every list item under `steps:` starts with `-`.                                                                                                 |
+| `./mvnw: Permission denied` (locally on macOS/Linux)                                                   | `chmod +x mvnw` (and `git update-index --chmod=+x mvnw` if you commit it).                                                                                                                |
+| CI fails with `release version 25 not supported`                                                       | `java-version` in `setup-java` is lower than 25.                                                                                                                                          |
+| `WARNING: A terminally deprecated method in sun.misc.Unsafe has been called` at the start of the build | Harmless. It comes from a library inside Maven itself running on Java 25, not from your code.                                                                                             |
+| Release workflow fails with `HTTP 403` / `Resource not accessible by integration`                      | `permissions: contents: write` is missing, or **Settings → Actions → General → Workflow permissions** is restricted (the `permissions:` key in the workflow normally overrides that).     |
+| Pushing a tag did nothing                                                                              | You created the tag but did not push it: `git push origin v1.0.0`. Or the tag does not match `v*`.                                                                                        |
+| `release.yml` exists but the tag run does not start                                                    | The workflow file must exist in the commit the tag points to. Tag a commit that contains `release.yml`.                                                                                   |
+| Workflow ran twice for one push                                                                        | Both `push` and `pull_request` triggered; see exercise 3a.                                                                                                                                |
 
 ---
 
@@ -491,7 +493,7 @@ git push origin --delete v1.2.0
 
 Useful documentation:
 
-* GitHub Actions: <https://docs.github.com/actions>
-* Workflow syntax: <https://docs.github.com/actions/reference/workflow-syntax-for-github-actions>
-* Building Java with Maven: <https://docs.github.com/actions/use-cases-and-examples/building-and-testing/building-and-testing-java-with-maven>
-* `actions/setup-java`: <https://github.com/actions/setup-java>
+- GitHub Actions: <https://docs.github.com/actions>
+- Workflow syntax: <https://docs.github.com/actions/reference/workflow-syntax-for-github-actions>
+- Building Java with Maven: <https://docs.github.com/actions/use-cases-and-examples/building-and-testing/building-and-testing-java-with-maven>
+- `actions/setup-java`: <https://github.com/actions/setup-java>
