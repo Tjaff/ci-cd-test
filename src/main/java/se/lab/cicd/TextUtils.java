@@ -25,6 +25,7 @@ public final class TextUtils {
             return false;
         }
         String normalized = text.toLowerCase();
+        normalized = normalized.replaceAll("[^a-z0-9]", "");
         return normalized.equals(reverse(normalized));
     }
 }
