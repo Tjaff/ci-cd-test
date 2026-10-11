@@ -28,7 +28,6 @@ class TextUtilsTest {
     }
 
     // Lab exercise 5: remove @Disabled, push, watch CI fail, then fix TextUtils.isPalindrome.
-    @Disabled("Lab exercise 5")
     @Test
     void palindromeIgnoresSpacesAndPunctuation() {
         assertTrue(TextUtils.isPalindrome("Never odd or even"));
