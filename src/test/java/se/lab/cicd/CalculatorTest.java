@@ -25,6 +25,11 @@ class CalculatorTest {
     }
 
     @Test
+    void multipliesTwoNumbers2() {
+        assertEquals(0, calc.multiply(3, 0));
+    }    
+
+    @Test
     void dividesTwoNumbers() {
         assertEquals(2.5, calc.divide(10, 4));
     }
