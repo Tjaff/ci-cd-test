@@ -23,3 +23,18 @@ jobs:
 
       - name: Build and run tests
         run: mvn -B verify
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v5
+        with:
+          name: test-results
+          path: target/surefire-reports/
+          retention-days: 5
+
+      - name: Upload jar
+        uses: actions/upload-artifact@v5
+        with:
+          name: app-jar
+          path: target/*.jar
+          retention-days: 5
