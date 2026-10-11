@@ -33,4 +33,9 @@ class CalculatorTest {
     void divisionByZeroThrows() {
         assertThrows(IllegalArgumentException.class, () -> calc.divide(1, 0));
     }
+
+    @Test
+    void multiplyingByZeroGivesZero() {
+       assertEquals(0, calc.multiply(42, 0));
+    }
 }
